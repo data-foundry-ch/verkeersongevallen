@@ -4,8 +4,14 @@ set -eu
 
 export DATABASE_PATH="${DATABASE_PATH:-/app/data/processed/accidents_deploy.duckdb}"
 
-if [ -x /tmp/fetch_duckdb.sh ]; then
-  /tmp/fetch_duckdb.sh
+echo "Entrypoint: DATABASE_PATH=$DATABASE_PATH"
+
+if [ ! -x /tmp/fetch_duckdb.sh ]; then
+  echo "ERROR: /tmp/fetch_duckdb.sh is missing or not executable"
+  exit 1
 fi
 
+/tmp/fetch_duckdb.sh
+
+echo "Starting uvicorn on port ${PORT:-8000}..."
 exec uvicorn backend.app.main:app --host 0.0.0.0 --port "${PORT:-8000}"

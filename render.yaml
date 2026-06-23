@@ -2,7 +2,7 @@
 # Custom domain: ongevallen.datafoundry.ch (see DEPLOY.md + deploy/showcase.yml)
 #
 # Secrets in Render dashboard:
-#   DUCKDB_DOWNLOAD_URL — HTTPS URL to accidents.duckdb
+#   DUCKDB_DOWNLOAD_URL — HTTPS URL to accidents_deploy.duckdb (downloaded at container start)
 #   CORS_ORIGINS        — optional; only if marketing site calls this API cross-origin
 #                         e.g. https://datafoundry.ch,https://www.datafoundry.ch
 

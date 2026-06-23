@@ -1,5 +1,5 @@
 #!/bin/sh
-# Fetch or verify accidents.duckdb for Docker / Render builds.
+# Fetch or verify accidents_deploy.duckdb for Docker / Render.
 # Set DUCKDB_DOWNLOAD_URL (https://...) when the file is not in the build context.
 set -eu
 

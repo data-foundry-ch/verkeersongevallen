@@ -40,6 +40,8 @@ RUN python -c "import duckdb; c=duckdb.connect(); c.execute('INSTALL spatial;');
 
 EXPOSE 8000
 
-RUN chmod +x /tmp/fetch_duckdb.sh /tmp/docker-entrypoint.sh
+# Strip Windows CRLF if present; invoke via sh so a bad shebang cannot kill the container silently.
+RUN sed -i 's/\r$//' /tmp/fetch_duckdb.sh /tmp/docker-entrypoint.sh \
+    && chmod +x /tmp/fetch_duckdb.sh /tmp/docker-entrypoint.sh
 
-CMD ["/tmp/docker-entrypoint.sh"]
+CMD ["/bin/sh", "/tmp/docker-entrypoint.sh"]
