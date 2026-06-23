@@ -1,0 +1,22 @@
+# One Render web service = one DataFoundry showcase (frontend + API + DuckDB).
+# Custom domain: ongevallen.datafoundry.ch (see DEPLOY.md + deploy/showcase.yml)
+#
+# Secrets in Render dashboard:
+#   DUCKDB_DOWNLOAD_URL — HTTPS URL to accidents.duckdb
+#   CORS_ORIGINS        — optional; only if marketing site calls this API cross-origin
+#                         e.g. https://datafoundry.ch,https://www.datafoundry.ch
+
+services:
+  - type: web
+    name: showcase-ongevallen
+    runtime: docker
+    plan: starter
+    region: frankfurt
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: DUCKDB_DOWNLOAD_URL
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false

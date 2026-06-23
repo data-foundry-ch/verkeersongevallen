@@ -1,0 +1,26 @@
+.venv
+venv
+__pycache__
+*.py[cod]
+*.egg-info
+.pytest_cache
+.git
+.github
+
+frontend/node_modules
+frontend/dist
+
+data/raw
+# accidents.duckdb is gitignored; pass via build context locally or DUCKDB_DOWNLOAD_URL on Render.
+# Do not ignore data/processed entirely — .gitkeep and optional local .duckdb are needed.
+
+.env
+.env.*
+!.env.production.example
+!frontend/.env.production.example
+
+.idea
+.vscode
+terminals
+*.md
+!README.md

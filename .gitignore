@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+
+# Node
+node_modules/
+frontend/dist/
+
+# Data (keep structure, ignore raw/processed artifacts)
+data/raw/**/*
+!data/raw/**/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# DuckDB
+*.duckdb
+*.duckdb.wal
+# Keep deploy size visible in docs; files remain gitignored
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated (keep column_map.generated.yml optional - user may want to track)
+# data/processed/profile_report.*

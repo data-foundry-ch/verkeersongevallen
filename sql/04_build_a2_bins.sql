@@ -1,0 +1,2 @@
+-- A2 bin tables built by scripts/03_build_a2_bins.py:
+--   road_bins_a2, accident_bin_counts_a2

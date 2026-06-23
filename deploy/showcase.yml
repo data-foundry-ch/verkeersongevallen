@@ -1,0 +1,11 @@
+# DataFoundry showcase metadata (one file per repo / deploy).
+# DNS: CNAME ongevallen.datafoundry.ch → your Render service hostname.
+
+id: verkeersongevallen
+title: Verkeersongevallen
+subdomain: ongevallen
+public_url: https://ongevallen.datafoundry.ch
+marketing_site: https://datafoundry.ch
+
+# Link from marketing (Lovable) to this showcase:
+#   <a href="https://ongevallen.datafoundry.ch">Verkeersongevallen kaart</a>

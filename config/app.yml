@@ -1,0 +1,66 @@
+target_road: A2
+# Roads enabled in API + frontend (add more in phase 2b after validation).
+implemented_roads:
+  - A1
+  - A2
+  - A4
+  - A5
+  - A6
+  - A7
+  - A8
+  - A9
+  - A10
+  - A12
+  - A13
+  - A15
+  - A16
+  - A17
+  - A18
+  - A20
+  - A22
+  - A24
+  - A27
+  - A28
+  - A29
+  - A30
+  - A31
+  - A32
+  - A35
+  - A37
+  - A38
+  - A44
+  - A50
+  - A58
+  - A59
+  - A65
+  - A67
+  - A73
+  - A74
+  - A76
+  - A77
+  - A79
+  - A200
+  - A325
+default_bin_size_km: 1
+api_host: 0.0.0.0
+api_port: 8001
+frontend_port: 5173
+available_bin_sizes_km:
+  - 1
+  - 2
+  - 5
+  - 10
+  - 20
+max_accident_points: 10000
+initial_year_from: 2015
+initial_year_to: 2024
+# H or T: physical carriageway used for bin geometry (accidents counted from both directions).
+geometry_direction: H
+
+database_path: data/processed/accidents.duckdb
+# Step 1 split: raw BRON/NWB archive (see scripts/05_split_databases.py raw).
+raw_database_path: data/processed/accidents_raw.duckdb
+# Step 2 split: slim DB for Render — upload this file, not accidents.duckdb.
+deploy_database_path: data/processed/accidents_deploy.duckdb
+raw_nwb_dir: data/raw/nwb
+raw_bron_dir: data/raw/bron

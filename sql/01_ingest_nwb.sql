@@ -1,0 +1,5 @@
+-- Raw NWB tables are created by Python ingestion script.
+-- This file documents expected raw table names:
+--   raw_nwb_wegvakken, raw_nwb_puntlocaties, raw_nwb_hectopunten,
+--   raw_nwb_hectointervallen, raw_nwb_juncties, raw_nwb_junctiehectometrering,
+--   raw_nwb_wegvakgeografie

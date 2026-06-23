@@ -1,0 +1,87 @@
+nwb:
+  wegvakken:
+    path: data/raw/nwb/wegvakken.txt
+    id_col: WVK_ID
+    road_number_col: WEGNR_HMP
+    road_type_col: WEGBEHSRT
+    road_number_alt_col: WEGNUMMER
+    route_letter_col: ROUTELTR
+    route_number_col: ROUTENR
+    from_hm_col: KLOK_BEG
+    to_hm_col: KLOK_END
+    direction_col: RIJRICHTNG
+    fk_col: FK_VELD5
+  wegvakgeografie:
+    path: data/raw/nwb/wegvakgeografie.shp
+    id_col: WVK_ID
+    geometry_col: geom
+  puntlocaties:
+    path: data/raw/nwb/puntlocaties.txt
+    point_id_col: FK_VELD5
+    wegvak_id_col: null
+    hm_col: null
+    x_col: X_COORD
+    y_col: Y_COORD
+  hectopunten:
+    path: data/raw/nwb/hectopunten.txt
+    wegvak_id_col: WVK_ID
+    hm_col: HECTOMETER
+    distance_col: AFSTAND
+    point_id_col: FK_VELD5
+  hectointervallen:
+    path: data/raw/nwb/hectointervallen.txt
+    wegvak_id_col: WVK_ID
+    beg_km_col: BEGKM
+    end_km_col: ENDKM
+    beg_distance_col: BEGAFSTAND
+    end_distance_col: ENDAFSTAND
+  juncties:
+    path: data/raw/nwb/juncties.txt
+    id_col: JTE_ID
+  junctiehectometrering:
+    path: data/raw/nwb/junctiehectometrering.txt
+bron:
+  accidents:
+    path: data/raw/bron/ongevallen.txt
+    accident_id_col: VKL_NUMMER
+    year_col: JAAR_VKL
+    date_col: DATUM_VKL
+    hour_col: UUR
+    severity_col: AP3_CODE
+    accident_type_col: AOL_ID
+    road_number_col: null
+    road_type_col: null
+    wegvak_id_col: WVK_ID
+    puntlocatie_id_col: FK_VELD5
+    hm_col: HECTOMETER
+    x_col: null
+    y_col: null
+    fatal_count_col: ANTL_DOD
+    injury_count_col: ANTL_GZH
+a2:
+  canonical_road_number: A2
+  allowed_raw_road_number_values:
+  - A2
+  - '002'
+  - '2'
+  - '02'
+  allowed_road_type_values:
+  - R
+  - A
+  route_letter_values:
+  - A
+  route_number_values:
+  - '2'
+  - '02'
+  - '002'
+  notes: 'Primary A2 key is WEGNR_HMP=''A2''. Fallback: WEGBEHSRT in (R,A) with normalized
+    number 2.'
+road_number_normalization:
+  strip_whitespace: true
+  uppercase_letters: true
+  rijksweg_prefixes:
+  - Rijksweg
+  - Autosnelweg
+  combine_type_number: true
+_generated_at: '2026-06-21T11:21:56.433251+00:00'
+_note: Review and copy relevant fields to config/column_map.yml

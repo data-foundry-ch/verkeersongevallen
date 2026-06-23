@@ -1,0 +1,3 @@
+-- Normalization SQL is executed dynamically from Python using column_map.yml.
+-- See scripts/02_build_normalized_tables.py for table builds:
+--   roads_norm, roads_a2_norm, road_points_norm, accidents_norm, accidents_a2_norm
