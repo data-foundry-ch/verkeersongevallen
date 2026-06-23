@@ -23,8 +23,8 @@ RUN apt-get update \
 COPY pyproject.toml README.md ./
 COPY backend ./backend
 COPY config ./config
-COPY deploy/fetch_duckdb.sh /tmp/fetch_duckdb.sh
-COPY deploy/docker-entrypoint.sh /tmp/docker-entrypoint.sh
+# Not /tmp — Render mounts a fresh tmpfs over /tmp at runtime (scripts would disappear).
+COPY deploy/fetch_duckdb.sh deploy/docker-entrypoint.sh ./deploy/
 
 RUN pip install --no-cache-dir .
 
@@ -41,7 +41,7 @@ RUN python -c "import duckdb; c=duckdb.connect(); c.execute('INSTALL spatial;');
 EXPOSE 8000
 
 # Strip Windows CRLF if present; invoke via sh so a bad shebang cannot kill the container silently.
-RUN sed -i 's/\r$//' /tmp/fetch_duckdb.sh /tmp/docker-entrypoint.sh \
-    && chmod +x /tmp/fetch_duckdb.sh /tmp/docker-entrypoint.sh
+RUN sed -i 's/\r$//' deploy/fetch_duckdb.sh deploy/docker-entrypoint.sh \
+    && chmod +x deploy/fetch_duckdb.sh deploy/docker-entrypoint.sh
 
-CMD ["/bin/sh", "/tmp/docker-entrypoint.sh"]
+CMD ["/bin/sh", "/app/deploy/docker-entrypoint.sh"]
