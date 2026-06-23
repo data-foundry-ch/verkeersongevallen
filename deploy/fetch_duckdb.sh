@@ -3,7 +3,7 @@
 # Set DUCKDB_DOWNLOAD_URL (https://...) when the file is not in the build context.
 set -eu
 
-DB_PATH="${DATABASE_PATH:-data/processed/accidents.duckdb}"
+DB_PATH="${DATABASE_PATH:-data/processed/accidents_deploy.duckdb}"
 mkdir -p "$(dirname "$DB_PATH")"
 
 if [ -f "$DB_PATH" ] && [ -s "$DB_PATH" ]; then

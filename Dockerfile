@@ -24,20 +24,22 @@ COPY pyproject.toml README.md ./
 COPY backend ./backend
 COPY config ./config
 COPY deploy/fetch_duckdb.sh /tmp/fetch_duckdb.sh
+COPY deploy/docker-entrypoint.sh /tmp/docker-entrypoint.sh
 
 RUN pip install --no-cache-dir .
 
 COPY --from=frontend /fe/dist ./frontend/dist
 
-COPY data/processed/ data/processed/
-ARG DUCKDB_DOWNLOAD_URL
-ENV DUCKDB_DOWNLOAD_URL=${DUCKDB_DOWNLOAD_URL}
-RUN chmod +x /tmp/fetch_duckdb.sh && /tmp/fetch_duckdb.sh
+RUN mkdir -p data/processed
 
+ENV DATABASE_PATH=/app/data/processed/accidents_deploy.duckdb
+ENV PYTHONUNBUFFERED=1
+
+# Pre-install spatial (DB is downloaded at container start — Render env vars are runtime-only).
 RUN python -c "import duckdb; c=duckdb.connect(); c.execute('INSTALL spatial;'); c.execute('LOAD spatial;')"
 
-ENV PYTHONUNBUFFERED=1
-ENV DATABASE_PATH=/app/data/processed/accidents_deploy.duckdb
 EXPOSE 8000
 
-CMD uvicorn backend.app.main:app --host 0.0.0.0 --port ${PORT:-8000}
+RUN chmod +x /tmp/fetch_duckdb.sh /tmp/docker-entrypoint.sh
+
+CMD ["/tmp/docker-entrypoint.sh"]
