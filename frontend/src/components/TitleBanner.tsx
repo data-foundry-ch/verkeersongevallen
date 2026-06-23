@@ -7,6 +7,8 @@ interface TitleBarProps {
   onViewModeChange: (mode: MapViewMode) => void;
   onRotateLeft?: () => void;
   onRotateRight?: () => void;
+  compact?: boolean;
+  showViewControls?: boolean;
 }
 
 export function TitleBar({
@@ -15,19 +17,23 @@ export function TitleBar({
   onViewModeChange,
   onRotateLeft,
   onRotateRight,
+  compact = false,
+  showViewControls = true,
 }: TitleBarProps) {
   return (
-    <div className="title-bar">
+    <div className={`title-bar ${compact ? "title-bar--compact" : ""}`}>
       <div className="float-title glass-panel">
         <h1>{APP_TITLE} {road}</h1>
-        <p className="float-title-sub">NWB hectometer-km · hoofdrijbaan</p>
+        {!compact && <p className="float-title-sub">NWB hectometer-km · hoofdrijbaan</p>}
       </div>
-      <MapViewControls
-        viewMode={viewMode}
-        onViewModeChange={onViewModeChange}
-        onRotateLeft={onRotateLeft}
-        onRotateRight={onRotateRight}
-      />
+      {showViewControls && (
+        <MapViewControls
+          viewMode={viewMode}
+          onViewModeChange={onViewModeChange}
+          onRotateLeft={onRotateLeft}
+          onRotateRight={onRotateRight}
+        />
+      )}
     </div>
   );
 }

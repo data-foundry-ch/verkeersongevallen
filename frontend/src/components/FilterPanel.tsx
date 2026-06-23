@@ -14,6 +14,7 @@ interface FilterPanelProps {
   binsLoading: boolean;
   colorSteps: ColorStep[];
   onChange: (patch: Partial<FilterState>) => void;
+  variant?: "desktop" | "sheet";
 }
 
 export function FilterPanel({
@@ -25,14 +26,15 @@ export function FilterPanel({
   binsLoading,
   colorSteps,
   onChange,
+  variant = "desktop",
 }: FilterPanelProps) {
   const apiOk = !health || health.status === "ok" || health.duckdb_ok;
   const minYear = meta?.year_from ?? 2000;
   const maxYear = meta?.year_to ?? 2030;
   const roadOptions = roads?.length ? roads : [{ road_number: "A2", status: "implemented" as const }];
 
-  return (
-    <CollapsiblePanel title="Filters" side="right">
+  const content = (
+    <>
       {health && !apiOk && (
         <p className="filter-status warn">
           Backend v{health.api_version ?? "?"} — herstart met <code>.\make.ps1 backend</code>
@@ -125,6 +127,12 @@ export function FilterPanel({
       <section className="legend-section">
         <Legend steps={colorSteps} />
       </section>
-    </CollapsiblePanel>
+    </>
   );
+
+  if (variant === "sheet") {
+    return <div className="sheet-panel-content">{content}</div>;
+  }
+
+  return <CollapsiblePanel title="Filters" side="right">{content}</CollapsiblePanel>;
 }

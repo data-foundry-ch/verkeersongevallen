@@ -113,6 +113,7 @@ interface AnalyticsPanelProps {
   selection: MapSelection;
   selectionLabel: string | null;
   onSelect: (selection: MapSelection) => void;
+  variant?: "desktop" | "sheet";
 }
 
 export function AnalyticsPanel({
@@ -124,6 +125,7 @@ export function AnalyticsPanel({
   selection,
   selectionLabel,
   onSelect,
+  variant = "desktop",
 }: AnalyticsPanelProps) {
   const [chartSort, setChartSort] = useState<BarChartSort>("km");
   const yearSpan = Math.max(yearTo - yearFrom + 1, 1);
@@ -137,8 +139,8 @@ export function AnalyticsPanel({
     ? [...bars].sort((a, b) => b.properties.density_per_km_year - a.properties.density_per_km_year)[0]
     : null;
 
-  return (
-    <CollapsiblePanel title="Analyse" side="left">
+  const content = (
+    <>
       <div className="kpi-grid">
         <div className="kpi-card">
           <span className="kpi-label">Ongevallen</span>
@@ -207,6 +209,12 @@ export function AnalyticsPanel({
           </button>
         </section>
       )}
-    </CollapsiblePanel>
+    </>
   );
+
+  if (variant === "sheet") {
+    return <div className="sheet-panel-content">{content}</div>;
+  }
+
+  return <CollapsiblePanel title="Analyse" side="left">{content}</CollapsiblePanel>;
 }

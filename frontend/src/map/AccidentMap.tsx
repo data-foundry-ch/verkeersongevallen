@@ -82,6 +82,8 @@ interface AccidentMapProps {
   bbox: [number, number, number, number] | null | undefined;
   loading: boolean;
   onSelect: (selection: MapSelection) => void;
+  mobile?: boolean;
+  sheetOpen?: boolean;
 }
 
 export const AccidentMap = forwardRef<AccidentMapHandle, AccidentMapProps>(function AccidentMap(
@@ -93,6 +95,8 @@ export const AccidentMap = forwardRef<AccidentMapHandle, AccidentMapProps>(funct
     bbox,
     loading,
     onSelect,
+    mobile = false,
+    sheetOpen = false,
   },
   ref,
 ) {
@@ -375,9 +379,12 @@ export const AccidentMap = forwardRef<AccidentMapHandle, AccidentMapProps>(funct
         <div className="map-empty">Geen bins gevonden voor deze filters.</div>
       )}
       {viewMode === "3d" && (
-        <div className="map-nav-hint">
-          Sleep om te draaien · middenklik of Alt+sleep om te verschuiven · hoogte ={" "}
-          {EXTRUSION_METERS_PER_DENSITY} m per ongeval/km/jaar
+        <div
+          className={`map-nav-hint ${mobile ? "map-nav-hint--mobile" : ""} ${sheetOpen ? "map-nav-hint--hidden" : ""}`}
+        >
+          {mobile
+            ? "Twee vingers: draaien · hoogte = dichtheid"
+            : `Sleep om te draaien · middenklik of Alt+sleep om te verschuiven · hoogte = ${EXTRUSION_METERS_PER_DENSITY} m per ongeval/km/jaar`}
         </div>
       )}
       <div ref={containerRef} className="map-container" />

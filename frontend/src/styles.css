@@ -553,29 +553,184 @@ h3 {
 }
 
 @media (max-width: 900px) {
-  .showcase-logo-link {
-    width: min(300px, calc(100vw - 28px));
+  .app-shell--mobile .showcase-logo-link {
+    top: 8px;
+    left: 8px;
+    width: 96px;
+    z-index: 13;
   }
 
-  .float-panel-left {
-    top: 118px;
-    width: min(300px, calc(100vw - 28px));
-    max-height: 42vh;
+  .app-shell--mobile .title-bar {
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 120px);
+    max-width: 280px;
   }
 
-  .float-panel-right {
-    top: auto;
-    bottom: 14px;
-    width: min(280px, calc(100vw - 28px));
-    max-height: 38vh;
+  .app-shell--mobile .title-bar--compact .float-title {
+    padding: 0.35rem 0.65rem;
   }
 
-  .panel-body {
-    max-height: calc(38vh - 3rem);
+  .app-shell--mobile .title-bar--compact .float-title h1 {
+    font-size: 0.82rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  .map-nav-hint {
-    bottom: calc(38vh + 28px);
-    max-width: calc(100vw - 28px);
+  .mobile-map-controls {
+    position: absolute;
+    right: 10px;
+    bottom: calc(58px + env(safe-area-inset-bottom, 0px));
+    z-index: 14;
+  }
+
+  .mobile-map-controls .map-view-controls button {
+    min-height: 36px;
+    min-width: 36px;
+    padding: 0.35rem 0.55rem;
+  }
+
+  .mobile-dock {
+    position: fixed;
+    left: 10px;
+    right: 10px;
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    z-index: 20;
+    display: flex;
+    gap: 8px;
+    padding: 6px;
+    border-radius: 14px;
+  }
+
+  .mobile-dock-btn {
+    flex: 1;
+    min-height: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.28);
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #333;
+    cursor: pointer;
+  }
+
+  .mobile-dock-btn.active {
+    background: rgba(26, 26, 46, 0.9);
+    border-color: rgba(26, 26, 46, 0.9);
+    color: #fff;
+  }
+
+  .bottom-sheet-root {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .bottom-sheet-backdrop {
+    position: absolute;
+    inset: 0;
+    border: none;
+    background: rgba(8, 12, 18, 0.45);
+    cursor: pointer;
+  }
+
+  .bottom-sheet {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-height: min(62vh, 520px);
+    border-radius: 18px 18px 0 0;
+    border-bottom: none;
+    display: flex;
+    flex-direction: column;
+    animation: sheet-slide-up 0.22s ease-out;
+  }
+
+  @keyframes sheet-slide-up {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  .bottom-sheet-handle {
+    width: 40px;
+    height: 4px;
+    margin: 8px auto 0;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.18);
+    flex-shrink: 0;
+  }
+
+  .bottom-sheet-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.5rem 1rem 0.35rem;
+    flex-shrink: 0;
+  }
+
+  .bottom-sheet-close {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.35);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #444;
+  }
+
+  .bottom-sheet-body {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 1rem calc(1rem + env(safe-area-inset-bottom, 0px));
+    flex: 1;
+    min-height: 0;
+  }
+
+  .sheet-panel-content {
+    padding-bottom: 0.25rem;
+  }
+
+  .sheet-panel-content .kpi-grid {
+    margin-bottom: 0.75rem;
+  }
+
+  .sheet-panel-content .bin-bar-chart-bars {
+    height: 100px;
+  }
+
+  .sheet-panel-content .pill,
+  .sheet-panel-content .field select,
+  .sheet-panel-content .field input {
+    min-height: 44px;
+  }
+
+  .map-nav-hint--mobile {
+    bottom: calc(108px + env(safe-area-inset-bottom, 0px));
+    max-width: calc(100vw - 20px);
+    font-size: 0.7rem;
+    padding: 0.35rem 0.6rem;
+  }
+
+  .map-nav-hint--hidden {
+    display: none;
+  }
+
+  .error-banner {
+    top: 52px;
+    max-width: calc(100vw - 20px);
   }
 }
