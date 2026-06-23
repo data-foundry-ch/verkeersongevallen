@@ -9,6 +9,8 @@ export interface OrbitControlOptions {
   pitchThreshold?: number;
   /** When false, standard flat-map panning only. */
   is3d?: () => boolean;
+  /** Touch/mobile: keep dragPan enabled in 3D so two-finger drag can move the map. */
+  isMobile?: () => boolean;
 }
 
 /**
@@ -20,7 +22,7 @@ export interface OrbitControlOptions {
  */
 export function installOrbitControls(
   map: Map,
-  { pitchThreshold = 25, is3d = () => false }: OrbitControlOptions = {},
+  { pitchThreshold = 25, is3d = () => false, isMobile = () => false }: OrbitControlOptions = {},
 ): () => void {
   const canvas = map.getCanvas();
 
@@ -35,6 +37,11 @@ export function installOrbitControls(
   const syncPanMode = () => {
     if (orbiting || panning) return;
     if (!is3d()) {
+      map.dragPan.enable();
+      return;
+    }
+    // Mobile: one-finger rotate + two-finger pan (MapLibre default when dragPan stays on).
+    if (isMobile()) {
       map.dragPan.enable();
       return;
     }

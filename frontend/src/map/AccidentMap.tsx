@@ -42,7 +42,7 @@ function interactiveLayerIds(mode: MapViewMode): string[] {
     : [BIN_HIGHLIGHT_LAYER_ID, BIN_LAYER_ID];
 }
 
-function applyViewModeSettings(map: Map, mode: MapViewMode, colorSteps: ColorStep[]) {
+function applyViewModeSettings(map: Map, mode: MapViewMode, colorSteps: ColorStep[], mobile: boolean) {
   const is3d = mode === "3d";
 
   if (map.getLayer(BIN_EXTRUSION_LAYER_ID)) {
@@ -58,6 +58,9 @@ function applyViewModeSettings(map: Map, mode: MapViewMode, colorSteps: ColorSte
     map.setMaxPitch(85);
     map.touchPitch.enable();
     map.dragRotate.enable();
+    if (mobile) {
+      map.dragPan.enable();
+    }
   } else {
     map.setMaxPitch(0);
     map.touchPitch.disable();
@@ -104,11 +107,13 @@ export const AccidentMap = forwardRef<AccidentMapHandle, AccidentMapProps>(funct
   const mapRef = useRef<Map | null>(null);
   const popupRef = useRef<Popup | null>(null);
   const viewModeRef = useRef<MapViewMode>(viewMode);
+  const mobileRef = useRef(mobile);
   const prevViewModeRef = useRef<MapViewMode | null>(null);
   const hasFittedBboxRef = useRef(false);
   const [mapReady, setMapReady] = useState(false);
 
   viewModeRef.current = viewMode;
+  mobileRef.current = mobile;
 
   useImperativeHandle(ref, () => ({
     rotateLeft: () => {
@@ -171,6 +176,7 @@ export const AccidentMap = forwardRef<AccidentMapHandle, AccidentMapProps>(funct
     const removeOrbitControls = installOrbitControls(map, {
       pitchThreshold: PITCH_LOD_THRESHOLD,
       is3d: () => viewModeRef.current === "3d",
+      isMobile: () => mobileRef.current,
     });
     mapRef.current = map;
     popupRef.current = new maplibregl.Popup({ closeButton: false, closeOnClick: false });
@@ -189,13 +195,13 @@ export const AccidentMap = forwardRef<AccidentMapHandle, AccidentMapProps>(funct
     const map = mapRef.current;
     if (!map || !mapReady) return;
 
-    applyViewModeSettings(map, viewMode, colorSteps);
+    applyViewModeSettings(map, viewMode, colorSteps, mobile);
 
     if (prevViewModeRef.current !== viewMode) {
       animateToViewMode(map, viewMode);
       prevViewModeRef.current = viewMode;
     }
-  }, [viewMode, mapReady, colorSteps]);
+  }, [viewMode, mapReady, colorSteps, mobile]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -252,9 +258,9 @@ export const AccidentMap = forwardRef<AccidentMapHandle, AccidentMapProps>(funct
       });
     }
 
-    applyViewModeSettings(map, viewMode, colorSteps);
+    applyViewModeSettings(map, viewMode, colorSteps, mobile);
     map.resize();
-  }, [bins, colorSteps, extrusionBins, mapReady, viewMode]);
+  }, [bins, colorSteps, extrusionBins, mapReady, viewMode, mobile]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -383,7 +389,7 @@ export const AccidentMap = forwardRef<AccidentMapHandle, AccidentMapProps>(funct
           className={`map-nav-hint ${mobile ? "map-nav-hint--mobile" : ""} ${sheetOpen ? "map-nav-hint--hidden" : ""}`}
         >
           {mobile
-            ? "Twee vingers: draaien · hoogte = dichtheid"
+            ? "1 vinger: draaien · 2 vingers: verschuiven · knijpen: zoomen"
             : `Sleep om te draaien · middenklik of Alt+sleep om te verschuiven · hoogte = ${EXTRUSION_METERS_PER_DENSITY} m per ongeval/km/jaar`}
         </div>
       )}
