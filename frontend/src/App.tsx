@@ -106,6 +106,15 @@ function AppInner() {
         onRotateRight={() => mapRef.current?.rotateRight()}
       />
 
+      <a
+        className="showcase-logo-link"
+        href={import.meta.env.VITE_MARKETING_URL ?? "https://datafoundry.ch"}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img className="showcase-logo" src="/datafoundry-logo.png" alt="DataFoundry" />
+      </a>
+
       <AnalyticsPanel
         bins={binsQuery.data}
         binsFilter={binsQuery.data?.filter}

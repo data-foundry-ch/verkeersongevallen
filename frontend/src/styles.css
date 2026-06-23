@@ -97,6 +97,22 @@ body,
   max-height: calc(100vh - 132px);
 }
 
+.showcase-logo-link {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 12;
+  display: block;
+  width: min(360px, calc(100vw - 28px));
+  line-height: 0;
+}
+
+.showcase-logo {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .float-panel-right {
   position: absolute;
   top: 118px;
@@ -537,6 +553,10 @@ h3 {
 }
 
 @media (max-width: 900px) {
+  .showcase-logo-link {
+    width: min(300px, calc(100vw - 28px));
+  }
+
   .float-panel-left {
     top: 118px;
     width: min(300px, calc(100vw - 28px));
